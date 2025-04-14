@@ -45,18 +45,21 @@ $(ANDROID_CORE): $(ANDROID_BUILD_DIR_INT_CORE)
 	@echo '------------------------------------'
 	# 下载Go依赖
 	cd $(GO_DIR) && go mod download
+	# 安装gomobile工具
+	cd $(GO_DIR) && go install golang.org/x/mobile/cmd/gomobile
+	cd $(GO_DIR) && go install golang.org/x/mobile/cmd/gobind
 	# 初始化GoMobile
-	cd $(GO_DIR) && go run golang.org/x/mobile/cmd/gomobile init
+	cd $(GO_DIR) && gomobile init
 	# 创建缓存目录
 	mkdir -p $(ANDROID_GOMOBILE_CACHE) android/libs
 	# 运行GoMobile绑定命令，生成AAR
-	cd $(GO_DIR) && go run golang.org/x/mobile/cmd/gomobile bind \
+	cd $(GO_DIR) && gomobile bind \
 		-o $(ANDROID_CORE) \
 		-v \
-		-cache $(ANDROID_GOMOBILE_CACHE) \
 		-target=android \
 		-androidapi $(ANDROID_MINIMUM_VERSION) \
 		-javapkg=org.ipfs.gomobile \
+		-ldflags="-checklinkname=0" \
 		$(CORE_PACKAGE)
 	@echo 'Done!'
 
@@ -72,18 +75,19 @@ $(IOS_CORE): $(IOS_BUILD_DIR_INT_CORE)
 	@echo '------------------------------------'
 	# 下载Go依赖
 	cd $(GO_DIR) && go mod download
-	# 安装gobind工具
+	# 安装gomobile和gobind工具
+	cd $(GO_DIR) && go install golang.org/x/mobile/cmd/gomobile
 	cd $(GO_DIR) && go install golang.org/x/mobile/cmd/gobind
 	# 初始化GoMobile
-	cd $(GO_DIR) && go run golang.org/x/mobile/cmd/gomobile init
+	cd $(GO_DIR) && gomobile init
 	# 创建目录
 	mkdir -p $(IOS_GOMOBILE_CACHE) ios/Frameworks
 	# 运行GoMobile绑定命令，生成XCFramework
-	cd $(GO_DIR) && go run golang.org/x/mobile/cmd/gomobile bind \
+	cd $(GO_DIR) && gomobile bind \
 			-o $(IOS_CORE) \
 			-tags 'nowatchdog' \
-			-cache $(IOS_GOMOBILE_CACHE) \
 			-target=ios \
+		    -ldflags="-checklinkname=0" \
 			$(CORE_PACKAGE)
 	@echo 'Done!'
 
