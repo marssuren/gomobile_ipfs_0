@@ -4,15 +4,14 @@ go 1.24.1
 
 require (
 	github.com/ipfs/boxo v0.29.1
-	github.com/ipfs/go-datastore v0.8.2
 	github.com/ipfs/kubo v0.34.1
 	github.com/libp2p/go-libp2p v0.41.1
-	github.com/libp2p/go-libp2p-record v0.3.1
 	github.com/libp2p/zeroconf/v2 v2.2.0
 	github.com/multiformats/go-multiaddr v0.15.0
 	github.com/multiformats/go-multiaddr-fmt v0.1.0
 	github.com/pkg/errors v0.9.1
 	go.uber.org/zap v1.27.0
+	golang.org/x/mobile v0.0.0-20250408133729-978277e7eaf7
 )
 
 require (
@@ -82,6 +81,7 @@ require (
 	github.com/ipfs/go-blockservice v0.5.2 // indirect
 	github.com/ipfs/go-cid v0.5.0 // indirect
 	github.com/ipfs/go-cidutil v0.1.0 // indirect
+	github.com/ipfs/go-datastore v0.8.2 // indirect
 	github.com/ipfs/go-ds-badger v0.3.4 // indirect
 	github.com/ipfs/go-ds-flatfs v0.5.5 // indirect
 	github.com/ipfs/go-ds-leveldb v0.5.2 // indirect
@@ -130,6 +130,7 @@ require (
 	github.com/libp2p/go-libp2p-kbucket v0.6.5 // indirect
 	github.com/libp2p/go-libp2p-pubsub v0.13.0 // indirect
 	github.com/libp2p/go-libp2p-pubsub-router v0.6.0 // indirect
+	github.com/libp2p/go-libp2p-record v0.3.1 // indirect
 	github.com/libp2p/go-libp2p-routing-helpers v0.7.5 // indirect
 	github.com/libp2p/go-libp2p-xor v0.1.0 // indirect
 	github.com/libp2p/go-msgio v0.3.0 // indirect
