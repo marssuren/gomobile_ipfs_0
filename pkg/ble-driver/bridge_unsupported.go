@@ -4,7 +4,7 @@
 package ble
 
 import (
-	proximity "github.com/marssuren/gomobile_ipfs_0/pkg/proximitytransport"
+	proximity "github.com/marssuren/gomobile_ipfs_0/go/pkg/proximitytransport"
 
 	"go.uber.org/zap"
 )

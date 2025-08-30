@@ -16,6 +16,7 @@ import (
 	"fmt"
 	"unsafe"
 
+	"github.com/marssuren/gomobile_ipfs_0/go/pkg/proximitytransport"
 	"go.uber.org/zap"
 )
 
@@ -29,10 +30,10 @@ type Driver struct {
 	defaultAddr  string
 }
 
-// Driver is a proximity.ProximityDriver
-var _ proximity.ProximityDriver = (*Driver)(nil)
+// Driver is a proximitytransport.ProximityDriver
+var _ proximitytransport.ProximityDriver = (*Driver)(nil)
 
-func NewDriver(logger *zap.Logger) proximity.ProximityDriver {
+func NewDriver(logger *zap.Logger) proximitytransport.ProximityDriver {
 	if logger == nil {
 		logger = zap.NewNop()
 	} else {
@@ -53,9 +54,9 @@ func NewDriver(logger *zap.Logger) proximity.ProximityDriver {
 func BLEHandleFoundPeer(remotePID *C.char) int { // nolint:revive // Need to prefix func name to avoid duplicate symbols between proximity drivers
 	goPID := C.GoString(remotePID)
 
-	proximity.TransportMapMutex.RLock()
-	t, ok := proximity.TransportMap[ProtocolName]
-	proximity.TransportMapMutex.RUnlock()
+	proximitytransport.TransportMapMutex.RLock()
+	t, ok := proximitytransport.TransportMap[ProtocolName]
+	proximitytransport.TransportMapMutex.RUnlock()
 	if !ok {
 		return 0
 	}
@@ -69,9 +70,9 @@ func BLEHandleFoundPeer(remotePID *C.char) int { // nolint:revive // Need to pre
 func BLEHandleLostPeer(remotePID *C.char) { // nolint:revive // Need to prefix func name to avoid duplicate symbols between proximity drivers
 	goPID := C.GoString(remotePID)
 
-	proximity.TransportMapMutex.RLock()
-	t, ok := proximity.TransportMap[ProtocolName]
-	proximity.TransportMapMutex.RUnlock()
+	proximitytransport.TransportMapMutex.RLock()
+	t, ok := proximitytransport.TransportMap[ProtocolName]
+	proximitytransport.TransportMapMutex.RUnlock()
 	if !ok {
 		return
 	}
@@ -83,9 +84,9 @@ func BLEReceiveFromPeer(remotePID *C.char, payload unsafe.Pointer, length C.int)
 	goPID := C.GoString(remotePID)
 	goPayload := C.GoBytes(payload, length)
 
-	proximity.TransportMapMutex.RLock()
-	t, ok := proximity.TransportMap[ProtocolName]
-	proximity.TransportMapMutex.RUnlock()
+	proximitytransport.TransportMapMutex.RLock()
+	t, ok := proximitytransport.TransportMap[ProtocolName]
+	proximitytransport.TransportMapMutex.RUnlock()
 	if !ok {
 		return
 	}
